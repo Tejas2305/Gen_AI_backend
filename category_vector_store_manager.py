@@ -440,38 +440,6 @@ if __name__ == "__main__":
         print("- get_category_info(category)")
         print("- compare_categories(category1, category2, query, k)")
         
-        # Example with dummy data (uncomment to test with actual data)
-        """
-        from langchain.schema import Document
-        
-        # Create test documents with categories
-        test_docs = {
-            'contract': [
-                Document(
-                    page_content="This is a service agreement between parties...",
-                    metadata={'source': 'contract.pdf', 'category': 'contract'}
-                )
-            ],
-            'policy': [
-                Document(
-                    page_content="Company policy regarding data protection...",
-                    metadata={'source': 'policy.pdf', 'category': 'policy'}
-                )
-            ]
-        }
-        
-        # Create category stores
-        results = manager.create_category_stores(test_docs, "test_docs")
-        print(f"Creation results: {results}")
-        
-        # Save stores
-        save_results = manager.save_category_stores()
-        print(f"Save results: {save_results}")
-        
-        # Get info
-        info = manager.get_category_info()
-        print(f"Store info: {info}")
-        """
         
     except Exception as e:
         print(f"Error during testing: {e}")

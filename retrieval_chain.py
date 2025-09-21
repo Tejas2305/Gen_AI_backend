@@ -46,13 +46,7 @@ class CategoryAwareLegalRAGChain:
         """Create specialized prompt templates for different use cases"""
         
         # Standard legal analysis prompt
-        self.standard_prompt_template = """You are a specialized AI assistant for legal document analysis. Your expertise lies in helping users understand complex legal documents by providing clear, accurate summaries and explanations.
-
-        **Your Role:**
-        - Analyze legal documents and provide accessible explanations
-        - Break down complex legal jargon into simple, understandable language  
-        - Help users understand their rights, obligations, and important terms
-        - Provide accurate information while avoiding legal advice
+        self.standard_prompt_template = """You are a legal document analysis assistant. Provide clear, concise explanations in plain language.
 
         **Context:**
         {context}
@@ -60,27 +54,16 @@ class CategoryAwareLegalRAGChain:
         **Previous Conversation:**
         {chat_history}
 
-        **Current Question:** {question}
+        **Question:** {question}
 
         **Instructions:**
-        1. **Accuracy First**: Base your response strictly on the provided document context
-        2. **Clear Communication**: Use plain language to explain legal concepts
-        3. **Source Attribution**: Always cite specific documents when referencing information
-        4. **Structure**: Organize your response in the following format:
-        - **Summary**: Provide a concise overview of the relevant document sections
-        - **Flaws**: Highlight any risks, ambiguities, or problematic clauses
-        - **How to Prevent**: Suggest ways to mitigate risks or clarify issues
-        5. **Quotes**: When explaining clauses, quote the relevant text and then explain it
-        6. **Limitations**: If information isn't in the provided context, clearly state this
-        7. **No Legal Advice**: Provide information and explanations, not legal advice
-
-        **Response Format:**
-        - **Summary**: 
-        - **Flaws**: 
-        - **How to Prevent**: 
+        - Be brief and direct - aim for 2-3 short paragraphs maximum
+        - Use simple language to explain legal concepts  
+        - Quote key clauses when relevant
+        - Highlight major risks if any
+        - This is information, not legal advice
 
         **Answer:**"""
-
         self.standard_prompt = PromptTemplate(
             template=self.standard_prompt_template,
             input_variables=["context", "chat_history", "question"]
@@ -124,6 +107,15 @@ class CategoryAwareLegalRAGChain:
         )
 
         logger.info("Legal prompt templates created")
+    
+    def _extract_response_content(self, response):
+        """Helper to extract text content from LLM response"""
+        if hasattr(response, 'content'):
+            return response.content
+        elif isinstance(response, str):
+            return response
+        else:
+            return str(response)
     
     def setup_category_chains(self, category_store_manager: CategoryVectorStoreManager, categories: List[str] = None):
         """Setup retrieval chains for specific categories"""
@@ -211,7 +203,6 @@ class CategoryAwareLegalRAGChain:
             logger.info(f"Processing query for category '{category}': {question[:100]}...")
             
             # Execute the category-specific retrieval chain
-
             response = self.category_chains[category].invoke({"question": question})
             logger.info(f"Raw chain response: {response}")
 
@@ -336,7 +327,7 @@ class CategoryAwareLegalRAGChain:
             
             # Get LLM response
             response = self.llm.invoke(prompt)
-            answer = response.content if hasattr(response, 'content') else str(response)
+            answer = self._extract_response_content(response)
             
             # Add to memory
             self.memory.save_context(
@@ -504,35 +495,8 @@ class CategoryAwareLegalRAGChain:
         
         return stats
 
+
 class LegalDocumentAnalyzer:
-    def compare_documents_by_text(self, question: str, text1: str, text2: str, file1: str = "Document 1", file2: str = "Document 2") -> Dict[str, Any]:
-        """Compare two documents by their text content (not by category)"""
-        if not text1 or not text2:
-            raise ValueError("Both documents must have text content for comparison.")
-        # Prepare prompt for document-level comparison
-        chat_history_str = self._format_chat_history() if hasattr(self, '_format_chat_history') else ""
-        prompt = f"""
-Compare the following two legal documents for the question below.
-
-Document 1 ({file1}):\n{text1[:2000]}{'...' if len(text1) > 2000 else ''}
-
-Document 2 ({file2}):\n{text2[:2000]}{'...' if len(text2) > 2000 else ''}
-
-Question: {question}
-
-{chat_history_str}
-Provide a detailed, structured comparison, highlighting similarities, differences, and any important legal implications.
-"""
-        response = self.llm.invoke(prompt)
-        answer = response.content if hasattr(response, 'content') else str(response)
-        result = {
-            "question": question,
-            "comparison_type": "document_file_comparison",
-            "file1": file1,
-            "file2": file2,
-            "answer": answer
-        }
-        return result
     """High-level interface for category-aware legal document analysis with comparison features"""
     
     def __init__(self):
@@ -543,6 +507,15 @@ Provide a detailed, structured comparison, highlighting similarities, difference
         self._available_categories = []
         # Use the same LLM as the RAG chain for direct document comparison
         self.llm = self.rag_chain.llm
+    
+    def _extract_response_content(self, response):
+        """Helper to extract text content from LLM response"""
+        if hasattr(response, 'content'):
+            return response.content
+        elif isinstance(response, str):
+            return response
+        else:
+            return str(response)
     
     def setup_with_category_stores(self, store_prefix: str = "legal_docs"):
         """Setup analyzer with category-based vector stores"""
@@ -559,7 +532,7 @@ Provide a detailed, structured comparison, highlighting similarities, difference
             if not self._available_categories:
                 raise ValueError("No categories were successfully loaded")
             
-            # Setup RAG chains for loaded categories - FIXED: Pass category store manager
+            # Setup RAG chains for loaded categories - Pass category store manager
             self.rag_chain.setup_category_chains(self.category_store_manager, self._available_categories)
             
             self._is_ready = True
@@ -586,6 +559,30 @@ Provide a detailed, structured comparison, highlighting similarities, difference
         """Ask a question within a specific category"""
         return self.ask_question(question, category)
     
+    def ask_question_with_context(self, question: str, context: str) -> Dict[str, Any]:
+        """Ask the LLM a question with direct context (file content)."""
+        chat_history_str = ""
+        prompt = self.rag_chain.standard_prompt.format(
+            context=context,
+            chat_history=chat_history_str,
+            question=question
+        )
+        logger.info(f"Direct context provided to LLM. Context length: {len(context)} characters.")
+        
+        # Get response from LLM
+        response = self.rag_chain.llm.invoke(prompt)
+        
+        # Extract text content from response object
+        answer_text = self._extract_response_content(response)
+        
+        return {
+            "question": question,
+            "answer": answer_text,  # Fixed: Now returns actual text content
+            "context_length": len(context),
+            "sources": [],
+            "chat_history_length": 0
+        }
+    
     def compare_documents(self, question: str, category1: str, category2: str) -> Dict[str, Any]:
         """Compare documents between two categories"""
         
@@ -593,6 +590,48 @@ Provide a detailed, structured comparison, highlighting similarities, difference
             raise ValueError("Analyzer not ready. Setup category stores first.")
         
         return self.rag_chain.compare_documents(question, category1, category2)
+    
+    def compare_documents_by_text(self, question: str, text1: str, text2: str, file1: str = "Document 1", file2: str = "Document 2") -> Dict[str, Any]:
+        """Compare two documents by their text content (not by category)"""
+        if not text1 or not text2:
+            raise ValueError("Both documents must have text content for comparison.")
+        
+        # Prepare prompt for document-level comparison
+        chat_history_str = ""
+        prompt = f"""You are a specialized AI assistant for legal document analysis. Compare the following two legal documents for the question below.
+
+Document 1 ({file1}):
+{text1[:2000]}{'...' if len(text1) > 2000 else ''}
+
+Document 2 ({file2}):
+{text2[:2000]}{'...' if len(text2) > 2000 else ''}
+
+Question: {question}
+
+Previous Conversation: {chat_history_str}
+
+Please provide a detailed, structured comparison, highlighting similarities, differences, and any important legal implications.
+
+**Response Format:**
+- **Summary**: Brief overview of what was compared
+- **Key Similarities**: Common elements between the documents
+- **Key Differences**: Major differences and variations
+- **Potential Issues**: Conflicts, gaps, or inconsistencies identified
+- **Recommendations**: Suggestions for addressing any issues found
+
+**Your Comparison:**
+"""
+        
+        response = self.llm.invoke(prompt)
+        answer_text = self._extract_response_content(response)
+        
+        return {
+            "question": question,
+            "comparison_type": "document_file_comparison",
+            "file1": file1,
+            "file2": file2,
+            "answer": answer_text  # Fixed: Extract text content
+        }
     
     def summarize_documents(self, category: str = None, context: str = None) -> Dict[str, Any]:
         """Get a summary of documents, optionally within a specific category or direct context."""
@@ -637,24 +676,6 @@ Provide a detailed, structured comparison, highlighting similarities, difference
         if context:
             return self.ask_question_with_context(termination_question, context)
         return self.ask_question(termination_question, category)
-
-    def ask_question_with_context(self, question: str, context: str) -> Dict[str, Any]:
-        """Ask the LLM a question with direct context (file content)."""
-        chat_history_str = ""
-        prompt = self.rag_chain.standard_prompt.format(
-            context=context,
-            chat_history=chat_history_str,
-            question=question
-        )
-        logger.info(f"Direct context provided to LLM. Context length: {len(context)} characters.")
-        answer = self.rag_chain.llm.invoke(prompt)
-        return {
-            "question": question,
-            "answer": answer,
-            "context_length": len(context),
-            "sources": [],
-            "chat_history_length": 0
-        }
     
     def compare_obligations(self, category1: str, category2: str) -> Dict[str, Any]:
         """Compare obligations between two document categories"""
@@ -721,6 +742,7 @@ Provide a detailed, structured comparison, highlighting similarities, difference
         if self._is_ready:
             return self.rag_chain.get_conversation_history()
         return []
+
 
 # Example usage
 if __name__ == "__main__":
