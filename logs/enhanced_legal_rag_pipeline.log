@@ -1,0 +1,470 @@
+2025-09-21 20:33:00,338 - __main__ - INFO - CORS configured - Origins: *, Methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+2025-09-21 20:33:00,365 - models - INFO - Models initialized successfully
+2025-09-21 20:33:00,365 - document_categorizer - INFO - Comprehensive categorization prompt template created
+2025-09-21 20:33:00,366 - document_categorizer - INFO - No existing categorization cache found, starting fresh
+2025-09-21 20:33:00,367 - document_categorizer - INFO - DocumentCategorizer initialized successfully
+2025-09-21 20:33:00,367 - document_categorizer - INFO - Comprehensive categorization prompt template created
+2025-09-21 20:33:00,368 - document_categorizer - INFO - No existing categorization cache found, starting fresh
+2025-09-21 20:33:00,368 - document_categorizer - INFO - DocumentCategorizer initialized successfully
+2025-09-21 20:33:00,369 - retrieval_chain - INFO - Conversation memory initialized
+2025-09-21 20:33:00,369 - retrieval_chain - INFO - Legal prompt templates created
+2025-09-21 20:33:00,370 - main_pipeline - INFO - Enhanced Legal RAG Pipeline initialized successfully
+2025-09-21 20:33:00,371 - __main__ - INFO - Pipeline initialized successfully. Temp dir: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_eeayhl6_
+2025-09-21 20:33:00,384 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2025-09-21 20:33:00,385 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-21 20:33:36,954 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:33:36] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 20:33:36,955 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:33:36] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 20:33:37,219 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:33:37] "GET /health HTTP/1.1" 200 -
+2025-09-21 20:33:37,265 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:33:37] "GET /health HTTP/1.1" 200 -
+2025-09-21 20:33:46,157 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:33:46] "POST /upload HTTP/1.1" 200 -
+2025-09-21 20:33:46,473 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:33:46] "OPTIONS /process HTTP/1.1" 200 -
+2025-09-21 20:33:46,738 - main_pipeline - INFO - Starting enhanced document processing pipeline for 1 files
+2025-09-21 20:33:46,738 - main_pipeline - INFO - Step 1: Loading, processing and categorizing documents...
+2025-09-21 20:33:46,794 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 20:33:46,915 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_eeayhl6_\20250921_203346_Sample_Legal_Contract.pdf
+2025-09-21 20:33:46,917 - document_categorizer - WARNING - LLM categorization failed: '\n    "category"', using fallback
+2025-09-21 20:33:46,920 - document_categorizer - INFO - Categorization cache saved with 1 entries
+2025-09-21 20:33:46,921 - document_categorizer - INFO - Document categorized as: contract (confidence: 0.80)
+2025-09-21 20:33:46,921 - document_processor - INFO - Document categorized as: contract (confidence: 0.80)
+2025-09-21 20:33:46,921 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_eeayhl6_\20250921_203346_Sample_Legal_Contract.pdf
+2025-09-21 20:33:46,922 - document_processor - INFO - Successfully loaded: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_eeayhl6_\20250921_203346_Sample_Legal_Contract.pdf (Category: contract)
+2025-09-21 20:33:46,922 - document_processor - INFO - Total documents loaded: 1
+2025-09-21 20:33:46,922 - document_processor - INFO - Documents categorized: 1
+2025-09-21 20:33:46,922 - main_pipeline - INFO - Step 2: Splitting documents into chunks...
+2025-09-21 20:33:46,923 - document_processor - INFO - Split 1 documents into 4 chunks
+2025-09-21 20:33:46,923 - main_pipeline - INFO - Step 3: Grouping documents by category...
+2025-09-21 20:33:46,924 - document_processor - INFO - Category 'contract': 4 documents
+2025-09-21 20:33:46,924 - main_pipeline - INFO - Step 4: Creating category-specific vector stores...
+2025-09-21 20:33:46,924 - category_vector_store_manager - INFO - Creating vector store for category 'contract' with 4 documents
+2025-09-21 20:33:48,071 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2025-09-21 20:33:48,115 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2025-09-21 20:33:48,124 - faiss - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes.
+2025-09-21 20:33:48,126 - category_vector_store_manager - INFO - Successfully created vector store for category: contract
+2025-09-21 20:33:48,126 - category_vector_store_manager - INFO - Created vector stores for 1 out of 1 categories
+2025-09-21 20:33:48,127 - main_pipeline - INFO - Step 5: Saving category vector stores...
+2025-09-21 20:33:48,130 - category_vector_store_manager - INFO - Saved vector store for category 'contract' to: category_stores\legal_docs_20250921_203346_contract
+2025-09-21 20:33:48,130 - main_pipeline - INFO - Step 6: Setting up enhanced RAG analyzer...
+2025-09-21 20:33:48,164 - category_vector_store_manager - INFO - Loaded vector store for category: contract
+2025-09-21 20:33:48,164 - category_vector_store_manager - INFO - Loaded 1 category vector stores
+2025-09-21 20:33:48,164 - retrieval_chain - INFO - Setting up category chains for categories: ['contract']
+2025-09-21 20:33:48,165 - category_vector_store_manager - INFO - Created retriever for category 'contract' with search_type=similarity
+2025-09-21 20:33:48,166 - retrieval_chain - INFO - Successfully setup retrieval chain for category: contract
+2025-09-21 20:33:48,166 - retrieval_chain - INFO - Setup completed for 1 categories: ['contract']
+2025-09-21 20:33:48,166 - retrieval_chain - INFO - Analyzer setup completed with 1 categories: ['contract']
+2025-09-21 20:33:48,179 - main_pipeline - INFO - Enhanced pipeline processing completed successfully: legal_docs_20250921_203346
+2025-09-21 20:33:48,179 - main_pipeline - INFO - Categories found: ['contract']
+2025-09-21 20:33:48,180 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:33:48] "POST /process HTTP/1.1" 200 -
+2025-09-21 20:33:48,187 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:33:48] "OPTIONS /categories HTTP/1.1" 200 -
+2025-09-21 20:33:48,499 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:33:48] "GET /categories HTTP/1.1" 200 -
+2025-09-21 20:33:55,123 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:33:55] "OPTIONS /query HTTP/1.1" 200 -
+2025-09-21 20:33:55,442 - retrieval_chain - INFO - Processing query for category 'contract': Can you explain this file...
+2025-09-21 20:34:00,434 - retrieval_chain - INFO - Raw chain response: {'question': 'Can you explain this file', 'chat_history': [HumanMessage(content='Can you explain this file', additional_kwargs={}, response_metadata={}), AIMessage(content='This document is a Confidentiality Agreement (also known as a Non-Disclosure Agreement or NDA). It\'s a contract where one party (the Receiving Party) promises to keep certain information shared by the other party (the Disclosing Party) secret.\n\nKey points include: the definition of "Confidential Information" as trade secrets, business plans, etc. designated as confidential (Clause 1); the Receiving Party\'s obligation to protect this information with reasonable care and not disclose it to others without permission (Clause 2); and the situations where information is *not* considered confidential, such as if it becomes public knowledge without a breach of the agreement, or if a court orders its disclosure (Clause 3). The agreement lasts for two years (Clause 4), and upon termination, the Receiving Party must return or destroy all confidential materials (Clause 5).\n\nA major risk for the Receiving Party is the potential for legal action if they breach the agreement by improperly disclosing or using the Confidential Information. The Disclosing Party risks that their confidential information may be disclosed despite the agreement.', additional_kwargs={}, response_metadata={})], 'answer': 'This document is a Confidentiality Agreement (also known as a Non-Disclosure Agreement or NDA). It\'s a contract where one party (the Receiving Party) promises to keep certain information shared by the other party (the Disclosing Party) secret.\n\nKey points include: the definition of "Confidential Information" as trade secrets, business plans, etc. designated as confidential (Clause 1); the Receiving Party\'s obligation to protect this information with reasonable care and not disclose it to others without permission (Clause 2); and the situations where information is *not* considered confidential, such as if it becomes public knowledge without a breach of the agreement, or if a court orders its disclosure (Clause 3). The agreement lasts for two years (Clause 4), and upon termination, the Receiving Party must return or destroy all confidential materials (Clause 5).\n\nA major risk for the Receiving Party is the potential for legal action if they breach the agreement by improperly disclosing or using the Confidential Information. The Disclosing Party risks that their confidential information may be disclosed despite the agreement.', 'source_documents': [Document(id='24dcf3dd-1b8e-4e3d-8109-b89a38e0282b', metadata={'producer': 'ReportLab PDF Library - www.reportlab.com', 'creator': '(unspecified)', 'creationdate': '2025-09-21T09:42:32+00:00', 'author': '(anonymous)', 'keywords': '', 'moddate': '2025-09-21T09:42:32+00:00', 'subject': '(unspecified)', 'title': '(anonymous)', 'trapped': '/False', 'source': '20250921_203346_Sample_Legal_Contract.pdf', 'total_pages': 1, 'page': 0, 'page_label': '1', 'document_type': 'PDF Document', 'upload_date': '2025-09-21T20:33:46.916484', 'file_path': 'C:\\Users\\SHREE~1.PCD\\AppData\\Local\\Temp\\legal_rag_eeayhl6_\\20250921_203346_Sample_Legal_Contract.pdf', 'file_size': 3469, 'modification_date': '2025-09-21T20:33:46.156629', 'page_number': 1, 'category': 'contract', 'category_confidence': 0.8, 'category_explanation': 'Keyword-based categorization. Found 20 relevant terms: agreement, parties agree, this agreement', 'chunk_id': 2, 'chunk_size': 975, 'total_chunks': 4}, page_content='. 3. Exclusions from Confidential Information Confidential Information shall not include information that: a) Is or becomes publicly available through no breach of this Agreement; b) Was rightfully known to the Receiving Party prior to disclosure by the Disclosing Party; c) Is independently developed by the Receiving Party without reference to the Confidential Information; or d) Is disclosed pursuant to a valid order of a court or governmental authority. 4. Term This Agreement shall remain in effect for a period of two (2) years from the date of execution. 5. Return of Materials Upon termination of this Agreement or upon request by the Disclosing Party, the Receiving Party shall promptly return or destroy all documents, notes, and other materials containing Confidential Information. 6. Miscellaneous a) This Agreement constitutes the entire agreement between the parties regarding its subject matter. b) Any amendments must be in writing and signed by both parties'), Document(id='88e64b8e-f363-410b-81c4-5669c751f81c', metadata={'producer': 'ReportLab PDF Library - www.reportlab.com', 'creator': '(unspecified)', 'creationdate': '2025-09-21T09:42:32+00:00', 'author': '(anonymous)', 'keywords': '', 'moddate': '2025-09-21T09:42:32+00:00', 'subject': '(unspecified)', 'title': '(anonymous)', 'trapped': '/False', 'source': '20250921_203346_Sample_Legal_Contract.pdf', 'total_pages': 1, 'page': 0, 'page_label': '1', 'document_type': 'PDF Document', 'upload_date': '2025-09-21T20:33:46.916484', 'file_path': 'C:\\Users\\SHREE~1.PCD\\AppData\\Local\\Temp\\legal_rag_eeayhl6_\\20250921_203346_Sample_Legal_Contract.pdf', 'file_size': 3469, 'modification_date': '2025-09-21T20:33:46.156629', 'page_number': 1, 'category': 'contract', 'category_confidence': 0.8, 'category_explanation': 'Keyword-based categorization. Found 20 relevant terms: agreement, parties agree, this agreement', 'chunk_id': 1, 'chunk_size': 968, 'total_chunks': 4}, page_content='. NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties agree as follows: 1. Definition of Confidential Information For purposes of this Agreement, "Confidential Information" includes, but is not limited to, trade secrets, business plans, financial data, customer lists, inventions, software, technical designs, marketing strategies, and any other information disclosed in written, oral, or electronic form that is designated as confidential. 2. Obligations of Receiving Party The Receiving Party shall: a) Maintain the confidentiality of the Confidential Information with at least the same degree of care as it uses to protect its own confidential information, but in no event less than reasonable care; b) Not disclose Confidential Information to any third party without the prior written consent of the Disclosing Party; c) Use the Confidential Information solely for the purpose of evaluating the potential business relationship. 3')]}
+2025-09-21 20:34:00,435 - retrieval_chain - INFO - Retrieved 2 source documents for category 'contract'
+2025-09-21 20:34:00,436 - retrieval_chain - INFO - First document preview: . 3. Exclusions from Confidential Information Confidential Information shall not include information that: a) Is or becomes publicly available through no breach of this Agreement; b) Was rightfully known to the Receiving Party prior to disclosure by the Disclosing Party; c) Is independently develope
+2025-09-21 20:34:00,436 - retrieval_chain - INFO - Query processed successfully for category: contract
+2025-09-21 20:34:00,436 - main_pipeline - INFO - Query processed successfully: Can you explain this file... (Category: All)
+2025-09-21 20:34:00,437 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:34:00] "POST /query HTTP/1.1" 200 -
+2025-09-21 20:35:40,172 - __main__ - INFO - Temporary files cleaned up
+2025-09-21 20:35:40,172 - __main__ - INFO - Flask app shutting down
+2025-09-21 20:52:45,337 - __main__ - INFO - CORS configured - Origins: *, Methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+2025-09-21 20:52:45,365 - models - INFO - Models initialized successfully
+2025-09-21 20:52:45,366 - document_categorizer - INFO - Comprehensive categorization prompt template created
+2025-09-21 20:52:45,376 - document_categorizer - INFO - Loaded 1 cached categorizations
+2025-09-21 20:52:45,377 - document_categorizer - INFO - DocumentCategorizer initialized successfully
+2025-09-21 20:52:45,377 - document_categorizer - INFO - Comprehensive categorization prompt template created
+2025-09-21 20:52:45,378 - document_categorizer - INFO - Loaded 1 cached categorizations
+2025-09-21 20:52:45,378 - document_categorizer - INFO - DocumentCategorizer initialized successfully
+2025-09-21 20:52:45,379 - retrieval_chain - INFO - Conversation memory initialized
+2025-09-21 20:52:45,379 - retrieval_chain - INFO - Legal prompt templates created
+2025-09-21 20:52:45,380 - main_pipeline - INFO - Enhanced Legal RAG Pipeline initialized successfully
+2025-09-21 20:52:45,381 - __main__ - INFO - Pipeline initialized successfully. Temp dir: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0
+2025-09-21 20:52:45,395 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2025-09-21 20:52:45,395 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-21 20:52:59,285 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:52:59] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 20:52:59,287 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:52:59] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 20:52:59,549 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:52:59] "GET /health HTTP/1.1" 200 -
+2025-09-21 20:52:59,595 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:52:59] "GET /health HTTP/1.1" 200 -
+2025-09-21 20:53:03,067 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:53:03] "POST /upload HTTP/1.1" 200 -
+2025-09-21 20:53:03,393 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:53:03] "OPTIONS /process HTTP/1.1" 200 -
+2025-09-21 20:53:03,644 - main_pipeline - INFO - Starting enhanced document processing pipeline for 1 files
+2025-09-21 20:53:03,644 - main_pipeline - INFO - Step 1: Loading, processing and categorizing documents...
+2025-09-21 20:53:03,704 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 20:53:03,810 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_205303_Sample_Legal_Contract.pdf
+2025-09-21 20:53:03,812 - document_categorizer - INFO - Using cached categorization
+2025-09-21 20:53:03,812 - document_processor - INFO - Document categorized as: contract (confidence: 0.80)
+2025-09-21 20:53:03,812 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_205303_Sample_Legal_Contract.pdf
+2025-09-21 20:53:03,812 - document_processor - INFO - Successfully loaded: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_205303_Sample_Legal_Contract.pdf (Category: contract)
+2025-09-21 20:53:03,812 - document_processor - INFO - Total documents loaded: 1
+2025-09-21 20:53:03,813 - document_processor - INFO - Documents categorized: 1
+2025-09-21 20:53:03,813 - main_pipeline - INFO - Step 2: Splitting documents into chunks...
+2025-09-21 20:53:03,813 - document_processor - INFO - Split 1 documents into 4 chunks
+2025-09-21 20:53:03,814 - main_pipeline - INFO - Step 3: Grouping documents by category...
+2025-09-21 20:53:03,814 - document_processor - INFO - Category 'contract': 4 documents
+2025-09-21 20:53:03,814 - main_pipeline - INFO - Step 4: Creating category-specific vector stores...
+2025-09-21 20:53:03,814 - category_vector_store_manager - INFO - Creating vector store for category 'contract' with 4 documents
+2025-09-21 20:53:05,219 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2025-09-21 20:53:05,256 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2025-09-21 20:53:05,265 - faiss - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes.
+2025-09-21 20:53:05,266 - category_vector_store_manager - INFO - Successfully created vector store for category: contract
+2025-09-21 20:53:05,267 - category_vector_store_manager - INFO - Created vector stores for 1 out of 1 categories
+2025-09-21 20:53:05,267 - main_pipeline - INFO - Step 5: Saving category vector stores...
+2025-09-21 20:53:05,271 - category_vector_store_manager - INFO - Saved vector store for category 'contract' to: category_stores\legal_docs_20250921_205303_contract
+2025-09-21 20:53:05,271 - main_pipeline - INFO - Step 6: Setting up enhanced RAG analyzer...
+2025-09-21 20:53:05,307 - category_vector_store_manager - INFO - Loaded vector store for category: contract
+2025-09-21 20:53:05,308 - category_vector_store_manager - INFO - Loaded 1 category vector stores
+2025-09-21 20:53:05,308 - retrieval_chain - INFO - Setting up category chains for categories: ['contract']
+2025-09-21 20:53:05,308 - category_vector_store_manager - INFO - Created retriever for category 'contract' with search_type=similarity
+2025-09-21 20:53:05,309 - retrieval_chain - INFO - Successfully setup retrieval chain for category: contract
+2025-09-21 20:53:05,309 - retrieval_chain - INFO - Setup completed for 1 categories: ['contract']
+2025-09-21 20:53:05,309 - retrieval_chain - INFO - Analyzer setup completed with 1 categories: ['contract']
+2025-09-21 20:53:05,325 - main_pipeline - INFO - Enhanced pipeline processing completed successfully: legal_docs_20250921_205303
+2025-09-21 20:53:05,326 - main_pipeline - INFO - Categories found: ['contract']
+2025-09-21 20:53:05,327 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:53:05] "POST /process HTTP/1.1" 200 -
+2025-09-21 20:53:05,334 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:53:05] "OPTIONS /categories HTTP/1.1" 200 -
+2025-09-21 20:53:05,650 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:53:05] "GET /categories HTTP/1.1" 200 -
+2025-09-21 20:53:21,881 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:53:21] "OPTIONS /query HTTP/1.1" 200 -
+2025-09-21 20:53:22,188 - retrieval_chain - INFO - Processing query for category 'contract': What is this file about...
+2025-09-21 20:53:27,211 - retrieval_chain - INFO - Raw chain response: {'question': 'What is this file about', 'chat_history': [HumanMessage(content='What is this file about', additional_kwargs={}, response_metadata={}), AIMessage(content='This document is a Confidentiality Agreement (also known as a Non-Disclosure Agreement or NDA). It outlines what information is considered confidential and what responsibilities the party receiving the information ("Receiving Party") has to protect it.\n\nSpecifically, the agreement defines "Confidential Information" broadly, including things like "trade secrets, business plans, financial data, customer lists" and any other information designated as confidential. The Receiving Party must protect this information with at least reasonable care and cannot disclose it to others without permission from the party sharing the information ("Disclosing Party"). However, there are exceptions; for example, information that is already public or independently developed is not considered confidential ("Exclusions from Confidential Information"). The agreement lasts for two years ("Term").\n\nA major risk for the Receiving Party is potential liability if confidential information is disclosed improperly. The Receiving Party is obligated to return or destroy all confidential materials when the agreement ends or upon request ("Return of Materials").', additional_kwargs={}, response_metadata={})], 'answer': 'This document is a Confidentiality Agreement (also known as a Non-Disclosure Agreement or NDA). It outlines what information is considered confidential and what responsibilities the party receiving the information ("Receiving Party") has to protect it.\n\nSpecifically, the agreement defines "Confidential Information" broadly, including things like "trade secrets, business plans, financial data, customer lists" and any other information designated as confidential. The Receiving Party must protect this information with at least reasonable care and cannot disclose it to others without permission from the party sharing the information ("Disclosing Party"). However, there are exceptions; for example, information that is already public or independently developed is not considered confidential ("Exclusions from Confidential Information"). The agreement lasts for two years ("Term").\n\nA major risk for the Receiving Party is potential liability if confidential information is disclosed improperly. The Receiving Party is obligated to return or destroy all confidential materials when the agreement ends or upon request ("Return of Materials").', 'source_documents': [Document(id='4c2c2df4-3655-4791-81af-36baf356684b', metadata={'producer': 'ReportLab PDF Library - www.reportlab.com', 'creator': '(unspecified)', 'creationdate': '2025-09-21T09:42:32+00:00', 'author': '(anonymous)', 'keywords': '', 'moddate': '2025-09-21T09:42:32+00:00', 'subject': '(unspecified)', 'title': '(anonymous)', 'trapped': '/False', 'source': '20250921_205303_Sample_Legal_Contract.pdf', 'total_pages': 1, 'page': 0, 'page_label': '1', 'document_type': 'PDF Document', 'upload_date': '2025-09-21T20:53:03.810970', 'file_path': 'C:\\Users\\SHREE~1.PCD\\AppData\\Local\\Temp\\legal_rag_jhxmarh0\\20250921_205303_Sample_Legal_Contract.pdf', 'file_size': 3469, 'modification_date': '2025-09-21T20:53:03.066217', 'page_number': 1, 'category': 'contract', 'category_confidence': 0.8, 'category_explanation': 'Keyword-based categorization. Found 20 relevant terms: agreement, parties agree, this agreement', 'chunk_id': 2, 'chunk_size': 975, 'total_chunks': 4}, page_content='. 3. Exclusions from Confidential Information Confidential Information shall not include information that: a) Is or becomes publicly available through no breach of this Agreement; b) Was rightfully known to the Receiving Party prior to disclosure by the Disclosing Party; c) Is independently developed by the Receiving Party without reference to the Confidential Information; or d) Is disclosed pursuant to a valid order of a court or governmental authority. 4. Term This Agreement shall remain in effect for a period of two (2) years from the date of execution. 5. Return of Materials Upon termination of this Agreement or upon request by the Disclosing Party, the Receiving Party shall promptly return or destroy all documents, notes, and other materials containing Confidential Information. 6. Miscellaneous a) This Agreement constitutes the entire agreement between the parties regarding its subject matter. b) Any amendments must be in writing and signed by both parties'), Document(id='55d5a8d2-755a-4bdd-95ab-71f050d655e4', metadata={'producer': 'ReportLab PDF Library - www.reportlab.com', 'creator': '(unspecified)', 'creationdate': '2025-09-21T09:42:32+00:00', 'author': '(anonymous)', 'keywords': '', 'moddate': '2025-09-21T09:42:32+00:00', 'subject': '(unspecified)', 'title': '(anonymous)', 'trapped': '/False', 'source': '20250921_205303_Sample_Legal_Contract.pdf', 'total_pages': 1, 'page': 0, 'page_label': '1', 'document_type': 'PDF Document', 'upload_date': '2025-09-21T20:53:03.810970', 'file_path': 'C:\\Users\\SHREE~1.PCD\\AppData\\Local\\Temp\\legal_rag_jhxmarh0\\20250921_205303_Sample_Legal_Contract.pdf', 'file_size': 3469, 'modification_date': '2025-09-21T20:53:03.066217', 'page_number': 1, 'category': 'contract', 'category_confidence': 0.8, 'category_explanation': 'Keyword-based categorization. Found 20 relevant terms: agreement, parties agree, this agreement', 'chunk_id': 1, 'chunk_size': 968, 'total_chunks': 4}, page_content='. NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties agree as follows: 1. Definition of Confidential Information For purposes of this Agreement, "Confidential Information" includes, but is not limited to, trade secrets, business plans, financial data, customer lists, inventions, software, technical designs, marketing strategies, and any other information disclosed in written, oral, or electronic form that is designated as confidential. 2. Obligations of Receiving Party The Receiving Party shall: a) Maintain the confidentiality of the Confidential Information with at least the same degree of care as it uses to protect its own confidential information, but in no event less than reasonable care; b) Not disclose Confidential Information to any third party without the prior written consent of the Disclosing Party; c) Use the Confidential Information solely for the purpose of evaluating the potential business relationship. 3')]}
+2025-09-21 20:53:27,212 - retrieval_chain - INFO - Retrieved 2 source documents for category 'contract'
+2025-09-21 20:53:27,212 - retrieval_chain - INFO - First document preview: . 3. Exclusions from Confidential Information Confidential Information shall not include information that: a) Is or becomes publicly available through no breach of this Agreement; b) Was rightfully known to the Receiving Party prior to disclosure by the Disclosing Party; c) Is independently develope
+2025-09-21 20:53:27,212 - retrieval_chain - INFO - Query processed successfully for category: contract
+2025-09-21 20:53:27,212 - main_pipeline - INFO - Query processed successfully: What is this file about... (Category: All)
+2025-09-21 20:53:27,212 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 20:53:27] "POST /query HTTP/1.1" 200 -
+2025-09-21 21:01:17,574 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:01:17] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:01:17,575 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:01:17] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:01:17,829 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:01:17] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:01:17,892 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:01:17] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:01:20,760 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:01:20] "POST /upload HTTP/1.1" 200 -
+2025-09-21 21:01:21,078 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:01:21] "OPTIONS /process HTTP/1.1" 200 -
+2025-09-21 21:01:21,345 - main_pipeline - INFO - Starting enhanced document processing pipeline for 1 files
+2025-09-21 21:01:21,345 - main_pipeline - INFO - Step 1: Loading, processing and categorizing documents...
+2025-09-21 21:01:21,347 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:01:21,355 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210120_Sample_Legal_Contract.pdf
+2025-09-21 21:01:21,356 - document_categorizer - INFO - Using cached categorization
+2025-09-21 21:01:21,356 - document_processor - INFO - Document categorized as: contract (confidence: 0.80)
+2025-09-21 21:01:21,357 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210120_Sample_Legal_Contract.pdf
+2025-09-21 21:01:21,357 - document_processor - INFO - Successfully loaded: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210120_Sample_Legal_Contract.pdf (Category: contract)
+2025-09-21 21:01:21,357 - document_processor - INFO - Total documents loaded: 1
+2025-09-21 21:01:21,357 - document_processor - INFO - Documents categorized: 1
+2025-09-21 21:01:21,357 - main_pipeline - INFO - Step 2: Splitting documents into chunks...
+2025-09-21 21:01:21,358 - document_processor - INFO - Split 1 documents into 4 chunks
+2025-09-21 21:01:21,358 - main_pipeline - INFO - Step 3: Grouping documents by category...
+2025-09-21 21:01:21,358 - document_processor - INFO - Category 'contract': 4 documents
+2025-09-21 21:01:21,358 - main_pipeline - INFO - Step 4: Creating category-specific vector stores...
+2025-09-21 21:01:21,358 - category_vector_store_manager - INFO - Creating vector store for category 'contract' with 4 documents
+2025-09-21 21:01:21,950 - category_vector_store_manager - INFO - Successfully created vector store for category: contract
+2025-09-21 21:01:21,951 - category_vector_store_manager - INFO - Created vector stores for 1 out of 1 categories
+2025-09-21 21:01:21,951 - main_pipeline - INFO - Step 5: Saving category vector stores...
+2025-09-21 21:01:21,954 - category_vector_store_manager - INFO - Saved vector store for category 'contract' to: category_stores\legal_docs_20250921_210121_contract
+2025-09-21 21:01:21,954 - main_pipeline - INFO - Step 6: Setting up enhanced RAG analyzer...
+2025-09-21 21:01:21,977 - category_vector_store_manager - INFO - Loaded vector store for category: contract
+2025-09-21 21:01:21,977 - category_vector_store_manager - INFO - Loaded 1 category vector stores
+2025-09-21 21:01:21,978 - retrieval_chain - INFO - Setting up category chains for categories: ['contract']
+2025-09-21 21:01:21,978 - retrieval_chain - INFO - Category chain for 'contract' already exists, skipping
+2025-09-21 21:01:21,978 - retrieval_chain - INFO - Setup completed for 1 categories: ['contract']
+2025-09-21 21:01:21,979 - retrieval_chain - INFO - Analyzer setup completed with 1 categories: ['contract']
+2025-09-21 21:01:21,989 - main_pipeline - INFO - Enhanced pipeline processing completed successfully: legal_docs_20250921_210121
+2025-09-21 21:01:21,989 - main_pipeline - INFO - Categories found: ['contract']
+2025-09-21 21:01:21,990 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:01:21] "POST /process HTTP/1.1" 200 -
+2025-09-21 21:01:21,992 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:01:21] "OPTIONS /categories HTTP/1.1" 200 -
+2025-09-21 21:01:22,305 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:01:22] "GET /categories HTTP/1.1" 200 -
+2025-09-21 21:01:32,137 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:01:32] "OPTIONS /query HTTP/1.1" 200 -
+2025-09-21 21:01:32,449 - retrieval_chain - INFO - Processing query for category 'contract': Is this a healthcare policy...
+2025-09-21 21:01:36,571 - retrieval_chain - INFO - Raw chain response: {'question': 'Is this a healthcare policy', 'chat_history': [HumanMessage(content='What is this file about', additional_kwargs={}, response_metadata={}), AIMessage(content='This document is a Confidentiality Agreement (also known as a Non-Disclosure Agreement or NDA). It outlines what information is considered confidential and what responsibilities the party receiving the information ("Receiving Party") has to protect it.\n\nSpecifically, the agreement defines "Confidential Information" broadly, including things like "trade secrets, business plans, financial data, customer lists" and any other information designated as confidential. The Receiving Party must protect this information with at least reasonable care and cannot disclose it to others without permission from the party sharing the information ("Disclosing Party"). However, there are exceptions; for example, information that is already public or independently developed is not considered confidential ("Exclusions from Confidential Information"). The agreement lasts for two years ("Term").\n\nA major risk for the Receiving Party is potential liability if confidential information is disclosed improperly. The Receiving Party is obligated to return or destroy all confidential materials when the agreement ends or upon request ("Return of Materials").', additional_kwargs={}, response_metadata={}), HumanMessage(content='Is this a healthcare policy', additional_kwargs={}, response_metadata={}), AIMessage(content='No, this is not a healthcare policy. It\'s a Confidentiality Agreement (NDA) designed to protect sensitive information shared between two parties.\n\nThe agreement focuses on defining what "Confidential Information" is (trade secrets, business plans, etc.) and outlines the Receiving Party\'s obligations to protect it. The Receiving Party must keep the information confidential and can\'t share it without permission. A key risk for the Receiving Party is the potential liability if confidential information is disclosed improperly.\n\nThe agreement also specifies how long it lasts ("Term") and what happens to the confidential materials when it ends ("Return of Materials").', additional_kwargs={}, response_metadata={})], 'answer': 'No, this is not a healthcare policy. It\'s a Confidentiality Agreement (NDA) designed to protect sensitive information shared between two parties.\n\nThe agreement focuses on defining what "Confidential Information" is (trade secrets, business plans, etc.) and outlines the Receiving Party\'s obligations to protect it. The Receiving Party must keep the information confidential and can\'t share it without permission. A key risk for the Receiving Party is the potential liability if confidential information is disclosed improperly.\n\nThe agreement also specifies how long it lasts ("Term") and what happens to the confidential materials when it ends ("Return of Materials").', 'source_documents': [Document(id='4c2c2df4-3655-4791-81af-36baf356684b', metadata={'producer': 'ReportLab PDF Library - www.reportlab.com', 'creator': '(unspecified)', 'creationdate': '2025-09-21T09:42:32+00:00', 'author': '(anonymous)', 'keywords': '', 'moddate': '2025-09-21T09:42:32+00:00', 'subject': '(unspecified)', 'title': '(anonymous)', 'trapped': '/False', 'source': '20250921_205303_Sample_Legal_Contract.pdf', 'total_pages': 1, 'page': 0, 'page_label': '1', 'document_type': 'PDF Document', 'upload_date': '2025-09-21T20:53:03.810970', 'file_path': 'C:\\Users\\SHREE~1.PCD\\AppData\\Local\\Temp\\legal_rag_jhxmarh0\\20250921_205303_Sample_Legal_Contract.pdf', 'file_size': 3469, 'modification_date': '2025-09-21T20:53:03.066217', 'page_number': 1, 'category': 'contract', 'category_confidence': 0.8, 'category_explanation': 'Keyword-based categorization. Found 20 relevant terms: agreement, parties agree, this agreement', 'chunk_id': 2, 'chunk_size': 975, 'total_chunks': 4}, page_content='. 3. Exclusions from Confidential Information Confidential Information shall not include information that: a) Is or becomes publicly available through no breach of this Agreement; b) Was rightfully known to the Receiving Party prior to disclosure by the Disclosing Party; c) Is independently developed by the Receiving Party without reference to the Confidential Information; or d) Is disclosed pursuant to a valid order of a court or governmental authority. 4. Term This Agreement shall remain in effect for a period of two (2) years from the date of execution. 5. Return of Materials Upon termination of this Agreement or upon request by the Disclosing Party, the Receiving Party shall promptly return or destroy all documents, notes, and other materials containing Confidential Information. 6. Miscellaneous a) This Agreement constitutes the entire agreement between the parties regarding its subject matter. b) Any amendments must be in writing and signed by both parties'), Document(id='55d5a8d2-755a-4bdd-95ab-71f050d655e4', metadata={'producer': 'ReportLab PDF Library - www.reportlab.com', 'creator': '(unspecified)', 'creationdate': '2025-09-21T09:42:32+00:00', 'author': '(anonymous)', 'keywords': '', 'moddate': '2025-09-21T09:42:32+00:00', 'subject': '(unspecified)', 'title': '(anonymous)', 'trapped': '/False', 'source': '20250921_205303_Sample_Legal_Contract.pdf', 'total_pages': 1, 'page': 0, 'page_label': '1', 'document_type': 'PDF Document', 'upload_date': '2025-09-21T20:53:03.810970', 'file_path': 'C:\\Users\\SHREE~1.PCD\\AppData\\Local\\Temp\\legal_rag_jhxmarh0\\20250921_205303_Sample_Legal_Contract.pdf', 'file_size': 3469, 'modification_date': '2025-09-21T20:53:03.066217', 'page_number': 1, 'category': 'contract', 'category_confidence': 0.8, 'category_explanation': 'Keyword-based categorization. Found 20 relevant terms: agreement, parties agree, this agreement', 'chunk_id': 1, 'chunk_size': 968, 'total_chunks': 4}, page_content='. NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties agree as follows: 1. Definition of Confidential Information For purposes of this Agreement, "Confidential Information" includes, but is not limited to, trade secrets, business plans, financial data, customer lists, inventions, software, technical designs, marketing strategies, and any other information disclosed in written, oral, or electronic form that is designated as confidential. 2. Obligations of Receiving Party The Receiving Party shall: a) Maintain the confidentiality of the Confidential Information with at least the same degree of care as it uses to protect its own confidential information, but in no event less than reasonable care; b) Not disclose Confidential Information to any third party without the prior written consent of the Disclosing Party; c) Use the Confidential Information solely for the purpose of evaluating the potential business relationship. 3')]}
+2025-09-21 21:01:36,571 - retrieval_chain - INFO - Retrieved 2 source documents for category 'contract'
+2025-09-21 21:01:36,571 - retrieval_chain - INFO - First document preview: . 3. Exclusions from Confidential Information Confidential Information shall not include information that: a) Is or becomes publicly available through no breach of this Agreement; b) Was rightfully known to the Receiving Party prior to disclosure by the Disclosing Party; c) Is independently develope
+2025-09-21 21:01:36,572 - retrieval_chain - INFO - Query processed successfully for category: contract
+2025-09-21 21:01:36,572 - main_pipeline - INFO - Query processed successfully: Is this a healthcare policy... (Category: All)
+2025-09-21 21:01:36,572 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:01:36] "POST /query HTTP/1.1" 200 -
+2025-09-21 21:07:45,871 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:07:45] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:07:45,873 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:07:45] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:07:46,132 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:07:46] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:07:46,182 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:07:46] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:07:58,754 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:07:58] "POST /upload HTTP/1.1" 200 -
+2025-09-21 21:07:59,061 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:07:59] "OPTIONS /process HTTP/1.1" 200 -
+2025-09-21 21:07:59,325 - main_pipeline - INFO - Starting enhanced document processing pipeline for 1 files
+2025-09-21 21:07:59,325 - main_pipeline - INFO - Step 1: Loading, processing and categorizing documents...
+2025-09-21 21:07:59,327 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:07:59,335 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210758_Sample_Legal_Contract.pdf
+2025-09-21 21:07:59,337 - document_categorizer - INFO - Using cached categorization
+2025-09-21 21:07:59,337 - document_processor - INFO - Document categorized as: contract (confidence: 0.80)
+2025-09-21 21:07:59,337 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210758_Sample_Legal_Contract.pdf
+2025-09-21 21:07:59,337 - document_processor - INFO - Successfully loaded: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210758_Sample_Legal_Contract.pdf (Category: contract)
+2025-09-21 21:07:59,338 - document_processor - INFO - Total documents loaded: 1
+2025-09-21 21:07:59,338 - document_processor - INFO - Documents categorized: 1
+2025-09-21 21:07:59,338 - main_pipeline - INFO - Step 2: Splitting documents into chunks...
+2025-09-21 21:07:59,338 - document_processor - INFO - Split 1 documents into 4 chunks
+2025-09-21 21:07:59,338 - main_pipeline - INFO - Step 3: Grouping documents by category...
+2025-09-21 21:07:59,338 - document_processor - INFO - Category 'contract': 4 documents
+2025-09-21 21:07:59,339 - main_pipeline - INFO - Step 4: Creating category-specific vector stores...
+2025-09-21 21:07:59,339 - category_vector_store_manager - INFO - Creating vector store for category 'contract' with 4 documents
+2025-09-21 21:07:59,982 - category_vector_store_manager - INFO - Successfully created vector store for category: contract
+2025-09-21 21:07:59,982 - category_vector_store_manager - INFO - Created vector stores for 1 out of 1 categories
+2025-09-21 21:07:59,983 - main_pipeline - INFO - Step 5: Saving category vector stores...
+2025-09-21 21:07:59,986 - category_vector_store_manager - INFO - Saved vector store for category 'contract' to: category_stores\legal_docs_20250921_210759_contract
+2025-09-21 21:07:59,986 - main_pipeline - INFO - Step 6: Setting up enhanced RAG analyzer...
+2025-09-21 21:08:00,013 - category_vector_store_manager - INFO - Loaded vector store for category: contract
+2025-09-21 21:08:00,013 - category_vector_store_manager - INFO - Loaded 1 category vector stores
+2025-09-21 21:08:00,013 - retrieval_chain - INFO - Setting up category chains for categories: ['contract']
+2025-09-21 21:08:00,013 - retrieval_chain - INFO - Category chain for 'contract' already exists, skipping
+2025-09-21 21:08:00,013 - retrieval_chain - INFO - Setup completed for 1 categories: ['contract']
+2025-09-21 21:08:00,013 - retrieval_chain - INFO - Analyzer setup completed with 1 categories: ['contract']
+2025-09-21 21:08:00,024 - main_pipeline - INFO - Enhanced pipeline processing completed successfully: legal_docs_20250921_210759
+2025-09-21 21:08:00,024 - main_pipeline - INFO - Categories found: ['contract']
+2025-09-21 21:08:00,025 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:08:00] "POST /process HTTP/1.1" 200 -
+2025-09-21 21:08:00,028 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:08:00] "OPTIONS /categories HTTP/1.1" 200 -
+2025-09-21 21:08:00,338 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:08:00] "GET /categories HTTP/1.1" 200 -
+2025-09-21 21:08:26,908 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:08:26] "OPTIONS /query HTTP/1.1" 200 -
+2025-09-21 21:08:27,213 - retrieval_chain - INFO - Processing query for category 'contract': Explain what this document is? Is this a health policy?...
+2025-09-21 21:08:33,201 - retrieval_chain - INFO - Raw chain response: {'question': 'Explain what this document is? Is this a health policy?', 'chat_history': [HumanMessage(content='What is this file about', additional_kwargs={}, response_metadata={}), AIMessage(content='This document is a Confidentiality Agreement (also known as a Non-Disclosure Agreement or NDA). It outlines what information is considered confidential and what responsibilities the party receiving the information ("Receiving Party") has to protect it.\n\nSpecifically, the agreement defines "Confidential Information" broadly, including things like "trade secrets, business plans, financial data, customer lists" and any other information designated as confidential. The Receiving Party must protect this information with at least reasonable care and cannot disclose it to others without permission from the party sharing the information ("Disclosing Party"). However, there are exceptions; for example, information that is already public or independently developed is not considered confidential ("Exclusions from Confidential Information"). The agreement lasts for two years ("Term").\n\nA major risk for the Receiving Party is potential liability if confidential information is disclosed improperly. The Receiving Party is obligated to return or destroy all confidential materials when the agreement ends or upon request ("Return of Materials").', additional_kwargs={}, response_metadata={}), HumanMessage(content='Is this a healthcare policy', additional_kwargs={}, response_metadata={}), AIMessage(content='No, this is not a healthcare policy. It\'s a Confidentiality Agreement (NDA) designed to protect sensitive information shared between two parties.\n\nThe agreement focuses on defining what "Confidential Information" is (trade secrets, business plans, etc.) and outlines the Receiving Party\'s obligations to protect it. The Receiving Party must keep the information confidential and can\'t share it without permission. A key risk for the Receiving Party is the potential liability if confidential information is disclosed improperly.\n\nThe agreement also specifies how long it lasts ("Term") and what happens to the confidential materials when it ends ("Return of Materials").', additional_kwargs={}, response_metadata={}), HumanMessage(content='Explain what this document is? Is this a health policy?', additional_kwargs={}, response_metadata={}), AIMessage(content='No, this is not a health policy. It\'s a Confidentiality Agreement (NDA), which is designed to protect sensitive information shared between two parties.\n\nThe agreement defines "Confidential Information" broadly, including things like "trade secrets, business plans, financial data, customer lists" and any other information designated as confidential. The Receiving Party must protect this information with at least reasonable care and cannot disclose it to others without permission from the party sharing the information ("Disclosing Party"). A major risk for the Receiving Party is potential liability if confidential information is disclosed improperly.\n\nThe agreement also specifies how long it lasts ("Term": two years) and what happens to the confidential materials when it ends ("Return of Materials": return or destroy all documents).', additional_kwargs={}, response_metadata={})], 'answer': 'No, this is not a health policy. It\'s a Confidentiality Agreement (NDA), which is designed to protect sensitive information shared between two parties.\n\nThe agreement defines "Confidential Information" broadly, including things like "trade secrets, business plans, financial data, customer lists" and any other information designated as confidential. The Receiving Party must protect this information with at least reasonable care and cannot disclose it to others without permission from the party sharing the information ("Disclosing Party"). A major risk for the Receiving Party is potential liability if confidential information is disclosed improperly.\n\nThe agreement also specifies how long it lasts ("Term": two years) and what happens to the confidential materials when it ends ("Return of Materials": return or destroy all documents).', 'source_documents': [Document(id='4c2c2df4-3655-4791-81af-36baf356684b', metadata={'producer': 'ReportLab PDF Library - www.reportlab.com', 'creator': '(unspecified)', 'creationdate': '2025-09-21T09:42:32+00:00', 'author': '(anonymous)', 'keywords': '', 'moddate': '2025-09-21T09:42:32+00:00', 'subject': '(unspecified)', 'title': '(anonymous)', 'trapped': '/False', 'source': '20250921_205303_Sample_Legal_Contract.pdf', 'total_pages': 1, 'page': 0, 'page_label': '1', 'document_type': 'PDF Document', 'upload_date': '2025-09-21T20:53:03.810970', 'file_path': 'C:\\Users\\SHREE~1.PCD\\AppData\\Local\\Temp\\legal_rag_jhxmarh0\\20250921_205303_Sample_Legal_Contract.pdf', 'file_size': 3469, 'modification_date': '2025-09-21T20:53:03.066217', 'page_number': 1, 'category': 'contract', 'category_confidence': 0.8, 'category_explanation': 'Keyword-based categorization. Found 20 relevant terms: agreement, parties agree, this agreement', 'chunk_id': 2, 'chunk_size': 975, 'total_chunks': 4}, page_content='. 3. Exclusions from Confidential Information Confidential Information shall not include information that: a) Is or becomes publicly available through no breach of this Agreement; b) Was rightfully known to the Receiving Party prior to disclosure by the Disclosing Party; c) Is independently developed by the Receiving Party without reference to the Confidential Information; or d) Is disclosed pursuant to a valid order of a court or governmental authority. 4. Term This Agreement shall remain in effect for a period of two (2) years from the date of execution. 5. Return of Materials Upon termination of this Agreement or upon request by the Disclosing Party, the Receiving Party shall promptly return or destroy all documents, notes, and other materials containing Confidential Information. 6. Miscellaneous a) This Agreement constitutes the entire agreement between the parties regarding its subject matter. b) Any amendments must be in writing and signed by both parties'), Document(id='55d5a8d2-755a-4bdd-95ab-71f050d655e4', metadata={'producer': 'ReportLab PDF Library - www.reportlab.com', 'creator': '(unspecified)', 'creationdate': '2025-09-21T09:42:32+00:00', 'author': '(anonymous)', 'keywords': '', 'moddate': '2025-09-21T09:42:32+00:00', 'subject': '(unspecified)', 'title': '(anonymous)', 'trapped': '/False', 'source': '20250921_205303_Sample_Legal_Contract.pdf', 'total_pages': 1, 'page': 0, 'page_label': '1', 'document_type': 'PDF Document', 'upload_date': '2025-09-21T20:53:03.810970', 'file_path': 'C:\\Users\\SHREE~1.PCD\\AppData\\Local\\Temp\\legal_rag_jhxmarh0\\20250921_205303_Sample_Legal_Contract.pdf', 'file_size': 3469, 'modification_date': '2025-09-21T20:53:03.066217', 'page_number': 1, 'category': 'contract', 'category_confidence': 0.8, 'category_explanation': 'Keyword-based categorization. Found 20 relevant terms: agreement, parties agree, this agreement', 'chunk_id': 1, 'chunk_size': 968, 'total_chunks': 4}, page_content='. NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties agree as follows: 1. Definition of Confidential Information For purposes of this Agreement, "Confidential Information" includes, but is not limited to, trade secrets, business plans, financial data, customer lists, inventions, software, technical designs, marketing strategies, and any other information disclosed in written, oral, or electronic form that is designated as confidential. 2. Obligations of Receiving Party The Receiving Party shall: a) Maintain the confidentiality of the Confidential Information with at least the same degree of care as it uses to protect its own confidential information, but in no event less than reasonable care; b) Not disclose Confidential Information to any third party without the prior written consent of the Disclosing Party; c) Use the Confidential Information solely for the purpose of evaluating the potential business relationship. 3')]}
+2025-09-21 21:08:33,202 - retrieval_chain - INFO - Retrieved 2 source documents for category 'contract'
+2025-09-21 21:08:33,202 - retrieval_chain - INFO - First document preview: . 3. Exclusions from Confidential Information Confidential Information shall not include information that: a) Is or becomes publicly available through no breach of this Agreement; b) Was rightfully known to the Receiving Party prior to disclosure by the Disclosing Party; c) Is independently develope
+2025-09-21 21:08:33,203 - retrieval_chain - INFO - Query processed successfully for category: contract
+2025-09-21 21:08:33,203 - main_pipeline - INFO - Query processed successfully: Explain what this document is? Is this a health po... (Category: All)
+2025-09-21 21:08:33,203 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:08:33] "POST /query HTTP/1.1" 200 -
+2025-09-21 21:08:41,326 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:08:41] "POST /upload HTTP/1.1" 200 -
+2025-09-21 21:08:41,638 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:08:41] "OPTIONS /process HTTP/1.1" 200 -
+2025-09-21 21:08:41,889 - main_pipeline - INFO - Starting enhanced document processing pipeline for 2 files
+2025-09-21 21:08:41,889 - main_pipeline - INFO - Step 1: Loading, processing and categorizing documents...
+2025-09-21 21:08:41,891 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:08:41,905 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210841_Policy_B_Premium_Health.pdf
+2025-09-21 21:08:41,906 - document_categorizer - WARNING - LLM categorization failed: '\n    "category"', using fallback
+2025-09-21 21:08:41,907 - document_categorizer - INFO - Categorization cache saved with 2 entries
+2025-09-21 21:08:41,908 - document_categorizer - INFO - Document categorized as: policy (confidence: 0.50)
+2025-09-21 21:08:41,909 - document_processor - INFO - Document categorized as: policy (confidence: 0.50)
+2025-09-21 21:08:41,909 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210841_Policy_B_Premium_Health.pdf
+2025-09-21 21:08:41,910 - document_processor - INFO - Successfully loaded: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210841_Policy_B_Premium_Health.pdf (Category: policy)
+2025-09-21 21:08:41,912 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:08:41,926 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210841_Policy_A_Basic_Health.pdf
+2025-09-21 21:08:41,927 - document_categorizer - WARNING - LLM categorization failed: '\n    "category"', using fallback
+2025-09-21 21:08:41,928 - document_categorizer - INFO - Categorization cache saved with 3 entries
+2025-09-21 21:08:41,928 - document_categorizer - INFO - Document categorized as: policy (confidence: 0.50)
+2025-09-21 21:08:41,928 - document_processor - INFO - Document categorized as: policy (confidence: 0.50)
+2025-09-21 21:08:41,928 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210841_Policy_A_Basic_Health.pdf
+2025-09-21 21:08:41,929 - document_processor - INFO - Successfully loaded: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210841_Policy_A_Basic_Health.pdf (Category: policy)
+2025-09-21 21:08:41,929 - document_processor - INFO - Total documents loaded: 2
+2025-09-21 21:08:41,929 - document_processor - INFO - Documents categorized: 2
+2025-09-21 21:08:41,929 - main_pipeline - INFO - Step 2: Splitting documents into chunks...
+2025-09-21 21:08:41,929 - document_processor - INFO - Split 2 documents into 2 chunks
+2025-09-21 21:08:41,930 - main_pipeline - INFO - Step 3: Grouping documents by category...
+2025-09-21 21:08:41,930 - document_processor - INFO - Category 'policy': 2 documents
+2025-09-21 21:08:41,930 - main_pipeline - INFO - Step 4: Creating category-specific vector stores...
+2025-09-21 21:08:41,930 - category_vector_store_manager - INFO - Creating vector store for category 'policy' with 2 documents
+2025-09-21 21:08:42,453 - category_vector_store_manager - INFO - Successfully created vector store for category: policy
+2025-09-21 21:08:42,453 - category_vector_store_manager - INFO - Created vector stores for 1 out of 1 categories
+2025-09-21 21:08:42,454 - main_pipeline - INFO - Step 5: Saving category vector stores...
+2025-09-21 21:08:42,456 - category_vector_store_manager - INFO - Saved vector store for category 'contract' to: category_stores\legal_docs_20250921_210759_contract
+2025-09-21 21:08:42,458 - category_vector_store_manager - INFO - Saved vector store for category 'policy' to: category_stores\legal_docs_20250921_210841_policy
+2025-09-21 21:08:42,458 - main_pipeline - INFO - Step 6: Setting up enhanced RAG analyzer...
+2025-09-21 21:08:42,474 - category_vector_store_manager - INFO - Loaded vector store for category: policy
+2025-09-21 21:08:42,474 - category_vector_store_manager - INFO - Loaded 1 category vector stores
+2025-09-21 21:08:42,475 - retrieval_chain - INFO - Setting up category chains for categories: ['policy']
+2025-09-21 21:08:42,475 - category_vector_store_manager - INFO - Created retriever for category 'policy' with search_type=similarity
+2025-09-21 21:08:42,475 - retrieval_chain - INFO - Successfully setup retrieval chain for category: policy
+2025-09-21 21:08:42,475 - retrieval_chain - INFO - Setup completed for 2 categories: ['contract', 'policy']
+2025-09-21 21:08:42,476 - retrieval_chain - INFO - Analyzer setup completed with 1 categories: ['policy']
+2025-09-21 21:08:42,496 - main_pipeline - INFO - Enhanced pipeline processing completed successfully: legal_docs_20250921_210841
+2025-09-21 21:08:42,496 - main_pipeline - INFO - Categories found: ['policy']
+2025-09-21 21:08:42,496 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:08:42] "POST /process HTTP/1.1" 200 -
+2025-09-21 21:08:42,500 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:08:42] "OPTIONS /categories HTTP/1.1" 200 -
+2025-09-21 21:08:42,810 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:08:42] "GET /categories HTTP/1.1" 200 -
+2025-09-21 21:08:51,635 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:08:51] "OPTIONS /compare_files HTTP/1.1" 200 -
+2025-09-21 21:08:51,942 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:08:51,946 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210841_Policy_B_Premium_Health.pdf
+2025-09-21 21:08:51,946 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210841_Policy_B_Premium_Health.pdf
+2025-09-21 21:08:51,948 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:08:51,952 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210841_Policy_A_Basic_Health.pdf
+2025-09-21 21:08:51,953 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_210841_Policy_A_Basic_Health.pdf
+2025-09-21 21:08:59,342 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:08:59] "POST /compare_files HTTP/1.1" 200 -
+2025-09-21 21:14:29,845 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:14:29] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:14:29,846 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:14:29] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:14:30,107 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:14:30] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:14:30,148 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:14:30] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:24:26,176 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:24:26] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:24:26,177 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:24:26] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:24:26,442 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:24:26] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:24:26,489 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:24:26] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:26:03,277 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:26:03] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:26:03,278 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:26:03] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:26:03,525 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:26:03] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:26:03,588 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:26:03] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:26:04,098 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:26:04] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:26:04,402 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:26:04] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:27:43,018 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:27:43] "POST /upload HTTP/1.1" 200 -
+2025-09-21 21:27:43,279 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:27:43] "OPTIONS /process HTTP/1.1" 200 -
+2025-09-21 21:27:43,326 - main_pipeline - INFO - Starting enhanced document processing pipeline for 2 files
+2025-09-21 21:27:43,326 - main_pipeline - INFO - Step 1: Loading, processing and categorizing documents...
+2025-09-21 21:27:43,328 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:27:43,343 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212743_Policy_B_Premium_Health.pdf
+2025-09-21 21:27:43,343 - document_categorizer - INFO - Using cached categorization
+2025-09-21 21:27:43,343 - document_processor - INFO - Document categorized as: policy (confidence: 0.50)
+2025-09-21 21:27:43,344 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212743_Policy_B_Premium_Health.pdf
+2025-09-21 21:27:43,344 - document_processor - INFO - Successfully loaded: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212743_Policy_B_Premium_Health.pdf (Category: policy)
+2025-09-21 21:27:43,345 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:27:43,357 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212743_Policy_A_Basic_Health.pdf
+2025-09-21 21:27:43,358 - document_categorizer - INFO - Using cached categorization
+2025-09-21 21:27:43,358 - document_processor - INFO - Document categorized as: policy (confidence: 0.50)
+2025-09-21 21:27:43,358 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212743_Policy_A_Basic_Health.pdf
+2025-09-21 21:27:43,358 - document_processor - INFO - Successfully loaded: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212743_Policy_A_Basic_Health.pdf (Category: policy)
+2025-09-21 21:27:43,359 - document_processor - INFO - Total documents loaded: 2
+2025-09-21 21:27:43,359 - document_processor - INFO - Documents categorized: 2
+2025-09-21 21:27:43,359 - main_pipeline - INFO - Step 2: Splitting documents into chunks...
+2025-09-21 21:27:43,359 - document_processor - INFO - Split 2 documents into 2 chunks
+2025-09-21 21:27:43,359 - main_pipeline - INFO - Step 3: Grouping documents by category...
+2025-09-21 21:27:43,360 - document_processor - INFO - Category 'policy': 2 documents
+2025-09-21 21:27:43,360 - main_pipeline - INFO - Step 4: Creating category-specific vector stores...
+2025-09-21 21:27:43,360 - category_vector_store_manager - INFO - Creating vector store for category 'policy' with 2 documents
+2025-09-21 21:27:44,214 - category_vector_store_manager - INFO - Successfully created vector store for category: policy
+2025-09-21 21:27:44,214 - category_vector_store_manager - INFO - Created vector stores for 1 out of 1 categories
+2025-09-21 21:27:44,214 - main_pipeline - INFO - Step 5: Saving category vector stores...
+2025-09-21 21:27:44,216 - category_vector_store_manager - INFO - Saved vector store for category 'contract' to: category_stores\legal_docs_20250921_210759_contract
+2025-09-21 21:27:44,219 - category_vector_store_manager - INFO - Saved vector store for category 'policy' to: category_stores\legal_docs_20250921_212743_policy
+2025-09-21 21:27:44,219 - main_pipeline - INFO - Step 6: Setting up enhanced RAG analyzer...
+2025-09-21 21:27:44,233 - category_vector_store_manager - INFO - Loaded vector store for category: policy
+2025-09-21 21:27:44,233 - category_vector_store_manager - INFO - Loaded 1 category vector stores
+2025-09-21 21:27:44,233 - retrieval_chain - INFO - Setting up category chains for categories: ['policy']
+2025-09-21 21:27:44,233 - retrieval_chain - INFO - Category chain for 'policy' already exists, skipping
+2025-09-21 21:27:44,233 - retrieval_chain - INFO - Setup completed for 2 categories: ['contract', 'policy']
+2025-09-21 21:27:44,233 - retrieval_chain - INFO - Analyzer setup completed with 1 categories: ['policy']
+2025-09-21 21:27:44,251 - main_pipeline - INFO - Enhanced pipeline processing completed successfully: legal_docs_20250921_212743
+2025-09-21 21:27:44,251 - main_pipeline - INFO - Categories found: ['policy']
+2025-09-21 21:27:44,251 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:27:44] "POST /process HTTP/1.1" 200 -
+2025-09-21 21:27:44,255 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:27:44] "OPTIONS /categories HTTP/1.1" 200 -
+2025-09-21 21:27:44,558 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:27:44] "GET /categories HTTP/1.1" 200 -
+2025-09-21 21:28:34,741 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:28:34] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:28:35,043 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:28:35] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:28:35,044 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:28:35] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:28:35,353 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:28:35] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:28:43,881 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:28:43] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:28:44,185 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:28:44] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:28:44,186 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:28:44] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:28:44,494 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:28:44] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:28:49,217 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:28:49] "POST /upload HTTP/1.1" 200 -
+2025-09-21 21:28:49,536 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:28:49] "OPTIONS /process HTTP/1.1" 200 -
+2025-09-21 21:28:49,784 - main_pipeline - INFO - Starting enhanced document processing pipeline for 2 files
+2025-09-21 21:28:49,785 - main_pipeline - INFO - Step 1: Loading, processing and categorizing documents...
+2025-09-21 21:28:49,787 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:28:49,802 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212849_Policy_B_Premium_Health.pdf
+2025-09-21 21:28:49,802 - document_categorizer - INFO - Using cached categorization
+2025-09-21 21:28:49,803 - document_processor - INFO - Document categorized as: policy (confidence: 0.50)
+2025-09-21 21:28:49,803 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212849_Policy_B_Premium_Health.pdf
+2025-09-21 21:28:49,803 - document_processor - INFO - Successfully loaded: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212849_Policy_B_Premium_Health.pdf (Category: policy)
+2025-09-21 21:28:49,804 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:28:49,816 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212849_Policy_A_Basic_Health.pdf
+2025-09-21 21:28:49,817 - document_categorizer - INFO - Using cached categorization
+2025-09-21 21:28:49,817 - document_processor - INFO - Document categorized as: policy (confidence: 0.50)
+2025-09-21 21:28:49,817 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212849_Policy_A_Basic_Health.pdf
+2025-09-21 21:28:49,817 - document_processor - INFO - Successfully loaded: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212849_Policy_A_Basic_Health.pdf (Category: policy)
+2025-09-21 21:28:49,817 - document_processor - INFO - Total documents loaded: 2
+2025-09-21 21:28:49,817 - document_processor - INFO - Documents categorized: 2
+2025-09-21 21:28:49,818 - main_pipeline - INFO - Step 2: Splitting documents into chunks...
+2025-09-21 21:28:49,818 - document_processor - INFO - Split 2 documents into 2 chunks
+2025-09-21 21:28:49,818 - main_pipeline - INFO - Step 3: Grouping documents by category...
+2025-09-21 21:28:49,818 - document_processor - INFO - Category 'policy': 2 documents
+2025-09-21 21:28:49,819 - main_pipeline - INFO - Step 4: Creating category-specific vector stores...
+2025-09-21 21:28:49,819 - category_vector_store_manager - INFO - Creating vector store for category 'policy' with 2 documents
+2025-09-21 21:28:50,314 - category_vector_store_manager - INFO - Successfully created vector store for category: policy
+2025-09-21 21:28:50,314 - category_vector_store_manager - INFO - Created vector stores for 1 out of 1 categories
+2025-09-21 21:28:50,314 - main_pipeline - INFO - Step 5: Saving category vector stores...
+2025-09-21 21:28:50,316 - category_vector_store_manager - INFO - Saved vector store for category 'contract' to: category_stores\legal_docs_20250921_210759_contract
+2025-09-21 21:28:50,319 - category_vector_store_manager - INFO - Saved vector store for category 'policy' to: category_stores\legal_docs_20250921_212849_policy
+2025-09-21 21:28:50,319 - main_pipeline - INFO - Step 6: Setting up enhanced RAG analyzer...
+2025-09-21 21:28:50,332 - category_vector_store_manager - INFO - Loaded vector store for category: policy
+2025-09-21 21:28:50,332 - category_vector_store_manager - INFO - Loaded 1 category vector stores
+2025-09-21 21:28:50,332 - retrieval_chain - INFO - Setting up category chains for categories: ['policy']
+2025-09-21 21:28:50,332 - retrieval_chain - INFO - Category chain for 'policy' already exists, skipping
+2025-09-21 21:28:50,333 - retrieval_chain - INFO - Setup completed for 2 categories: ['contract', 'policy']
+2025-09-21 21:28:50,333 - retrieval_chain - INFO - Analyzer setup completed with 1 categories: ['policy']
+2025-09-21 21:28:50,349 - main_pipeline - INFO - Enhanced pipeline processing completed successfully: legal_docs_20250921_212849
+2025-09-21 21:28:50,349 - main_pipeline - INFO - Categories found: ['policy']
+2025-09-21 21:28:50,350 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:28:50] "POST /process HTTP/1.1" 200 -
+2025-09-21 21:28:50,353 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:28:50] "OPTIONS /categories HTTP/1.1" 200 -
+2025-09-21 21:28:50,665 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:28:50] "GET /categories HTTP/1.1" 200 -
+2025-09-21 21:28:56,820 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:28:56] "OPTIONS /compare_files HTTP/1.1" 200 -
+2025-09-21 21:28:57,132 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:28:57,136 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212849_Policy_B_Premium_Health.pdf
+2025-09-21 21:28:57,136 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212849_Policy_B_Premium_Health.pdf
+2025-09-21 21:28:57,138 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:28:57,143 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212849_Policy_A_Basic_Health.pdf
+2025-09-21 21:28:57,143 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_212849_Policy_A_Basic_Health.pdf
+2025-09-21 21:29:03,639 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:29:03] "POST /compare_files HTTP/1.1" 200 -
+2025-09-21 21:30:06,911 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:30:06] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:30:06,912 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:30:06] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-21 21:30:07,178 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:30:07] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:30:07,225 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:30:07] "GET /health HTTP/1.1" 200 -
+2025-09-21 21:30:12,097 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:30:12] "POST /upload HTTP/1.1" 200 -
+2025-09-21 21:30:12,403 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:30:12] "OPTIONS /process HTTP/1.1" 200 -
+2025-09-21 21:30:12,669 - main_pipeline - INFO - Starting enhanced document processing pipeline for 2 files
+2025-09-21 21:30:12,669 - main_pipeline - INFO - Step 1: Loading, processing and categorizing documents...
+2025-09-21 21:30:12,671 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:30:12,685 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_213012_Policy_B_Premium_Health.pdf
+2025-09-21 21:30:12,686 - document_categorizer - INFO - Using cached categorization
+2025-09-21 21:30:12,686 - document_processor - INFO - Document categorized as: policy (confidence: 0.50)
+2025-09-21 21:30:12,686 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_213012_Policy_B_Premium_Health.pdf
+2025-09-21 21:30:12,686 - document_processor - INFO - Successfully loaded: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_213012_Policy_B_Premium_Health.pdf (Category: policy)
+2025-09-21 21:30:12,688 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:30:12,700 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_213012_Policy_A_Basic_Health.pdf
+2025-09-21 21:30:12,700 - document_categorizer - INFO - Using cached categorization
+2025-09-21 21:30:12,701 - document_processor - INFO - Document categorized as: policy (confidence: 0.50)
+2025-09-21 21:30:12,701 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_213012_Policy_A_Basic_Health.pdf
+2025-09-21 21:30:12,701 - document_processor - INFO - Successfully loaded: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_213012_Policy_A_Basic_Health.pdf (Category: policy)
+2025-09-21 21:30:12,701 - document_processor - INFO - Total documents loaded: 2
+2025-09-21 21:30:12,701 - document_processor - INFO - Documents categorized: 2
+2025-09-21 21:30:12,701 - main_pipeline - INFO - Step 2: Splitting documents into chunks...
+2025-09-21 21:30:12,702 - document_processor - INFO - Split 2 documents into 2 chunks
+2025-09-21 21:30:12,702 - main_pipeline - INFO - Step 3: Grouping documents by category...
+2025-09-21 21:30:12,702 - document_processor - INFO - Category 'policy': 2 documents
+2025-09-21 21:30:12,702 - main_pipeline - INFO - Step 4: Creating category-specific vector stores...
+2025-09-21 21:30:12,702 - category_vector_store_manager - INFO - Creating vector store for category 'policy' with 2 documents
+2025-09-21 21:30:13,181 - category_vector_store_manager - INFO - Successfully created vector store for category: policy
+2025-09-21 21:30:13,182 - category_vector_store_manager - INFO - Created vector stores for 1 out of 1 categories
+2025-09-21 21:30:13,182 - main_pipeline - INFO - Step 5: Saving category vector stores...
+2025-09-21 21:30:13,184 - category_vector_store_manager - INFO - Saved vector store for category 'contract' to: category_stores\legal_docs_20250921_210759_contract
+2025-09-21 21:30:13,187 - category_vector_store_manager - INFO - Saved vector store for category 'policy' to: category_stores\legal_docs_20250921_213012_policy
+2025-09-21 21:30:13,187 - main_pipeline - INFO - Step 6: Setting up enhanced RAG analyzer...
+2025-09-21 21:30:13,201 - category_vector_store_manager - INFO - Loaded vector store for category: policy
+2025-09-21 21:30:13,201 - category_vector_store_manager - INFO - Loaded 1 category vector stores
+2025-09-21 21:30:13,201 - retrieval_chain - INFO - Setting up category chains for categories: ['policy']
+2025-09-21 21:30:13,201 - retrieval_chain - INFO - Category chain for 'policy' already exists, skipping
+2025-09-21 21:30:13,201 - retrieval_chain - INFO - Setup completed for 2 categories: ['contract', 'policy']
+2025-09-21 21:30:13,202 - retrieval_chain - INFO - Analyzer setup completed with 1 categories: ['policy']
+2025-09-21 21:30:13,217 - main_pipeline - INFO - Enhanced pipeline processing completed successfully: legal_docs_20250921_213012
+2025-09-21 21:30:13,217 - main_pipeline - INFO - Categories found: ['policy']
+2025-09-21 21:30:13,218 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:30:13] "POST /process HTTP/1.1" 200 -
+2025-09-21 21:30:13,221 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:30:13] "OPTIONS /categories HTTP/1.1" 200 -
+2025-09-21 21:30:13,541 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:30:13] "GET /categories HTTP/1.1" 200 -
+2025-09-21 21:30:18,057 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:30:18] "OPTIONS /compare_files HTTP/1.1" 200 -
+2025-09-21 21:30:18,366 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:30:18,369 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_213012_Policy_A_Basic_Health.pdf
+2025-09-21 21:30:18,370 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_213012_Policy_A_Basic_Health.pdf
+2025-09-21 21:30:18,371 - document_processor - WARNING - UnstructuredPDFLoader failed, trying PyPDFLoader: No module named 'pi_heif'
+2025-09-21 21:30:18,376 - document_processor - INFO - Loaded PDF using PyPDFLoader: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_213012_Policy_B_Premium_Health.pdf
+2025-09-21 21:30:18,376 - document_processor - INFO - Processed 1 pages from C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_jhxmarh0\20250921_213012_Policy_B_Premium_Health.pdf
+2025-09-21 21:30:24,896 - werkzeug - INFO - 127.0.0.1 - - [21/Sep/2025 21:30:24] "POST /compare_files HTTP/1.1" 200 -
+2025-09-21 21:43:38,826 - __main__ - INFO - Temporary files cleaned up
+2025-09-21 21:43:38,826 - __main__ - INFO - Flask app shutting down
+2025-09-21 22:00:20,508 - __main__ - INFO - CORS configured - Origins: *, Methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+2025-09-21 22:00:20,533 - models - INFO - Models initialized successfully
+2025-09-21 22:00:20,533 - document_categorizer - INFO - Comprehensive categorization prompt template created
+2025-09-21 22:00:20,545 - document_categorizer - INFO - Loaded 3 cached categorizations
+2025-09-21 22:00:20,546 - document_categorizer - INFO - DocumentCategorizer initialized successfully
+2025-09-21 22:00:20,546 - document_categorizer - INFO - Comprehensive categorization prompt template created
+2025-09-21 22:00:20,546 - document_categorizer - INFO - Loaded 3 cached categorizations
+2025-09-21 22:00:20,546 - document_categorizer - INFO - DocumentCategorizer initialized successfully
+2025-09-21 22:00:20,547 - retrieval_chain - INFO - Conversation memory initialized
+2025-09-21 22:00:20,547 - retrieval_chain - INFO - Legal prompt templates created
+2025-09-21 22:00:20,547 - main_pipeline - INFO - Enhanced Legal RAG Pipeline initialized successfully
+2025-09-21 22:00:20,548 - __main__ - INFO - Pipeline initialized successfully. Temp dir: C:\Users\SHREE~1.PCD\AppData\Local\Temp\legal_rag_wdrvsyh4
+2025-09-21 22:00:20,561 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.105:5000
+2025-09-21 22:00:20,561 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-21 22:20:43,971 - __main__ - INFO - Temporary files cleaned up
+2025-09-21 22:20:43,971 - __main__ - INFO - Flask app shutting down

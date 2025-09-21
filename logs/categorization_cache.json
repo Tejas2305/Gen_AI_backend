@@ -1,0 +1,70 @@
+{
+  "version": "2.0",
+  "last_updated": "2025-09-21T21:08:41.927755",
+  "total_entries": 3,
+  "categorizations": {
+    "60eb06f5aa9fb9fac174cf59a424ec59": {
+      "category": "contract",
+      "confidence": 0.8,
+      "explanation": "Keyword-based categorization. Found 20 relevant terms: agreement, parties agree, this agreement",
+      "key_indicators": [
+        "agreement",
+        "parties agree",
+        "this agreement",
+        "agreement between"
+      ],
+      "method": "fallback_keywords",
+      "keyword_scores": {
+        "contract": 20,
+        "employment": 3,
+        "financial": 1,
+        "regulatory": 1
+      },
+      "categorization_date": "2025-09-21T20:33:46.918337",
+      "source_document": "20250921_203346_Sample_Legal_Contract.pdf",
+      "content_hash": "60eb06f5aa9fb9fac174cf59a424ec59",
+      "category_name": "Contract/Agreement"
+    },
+    "fd56b3fad72108ab3b02ceda71a20b40": {
+      "category": "policy",
+      "confidence": 0.5,
+      "explanation": "Keyword-based categorization. Found 2 relevant terms: policy",
+      "key_indicators": [
+        "policy"
+      ],
+      "method": "fallback_keywords",
+      "keyword_scores": {
+        "policy": 2,
+        "employment": 1
+      },
+      "categorization_date": "2025-09-21T21:08:41.906836",
+      "source_document": "20250921_210841_Policy_B_Premium_Health.pdf",
+      "content_hash": "fd56b3fad72108ab3b02ceda71a20b40",
+      "category_name": "Policy Document"
+    },
+    "dfcc767c2040086e9df94f1dc0f1cf08": {
+      "category": "policy",
+      "confidence": 0.5,
+      "explanation": "Keyword-based categorization. Found 2 relevant terms: policy",
+      "key_indicators": [
+        "policy"
+      ],
+      "method": "fallback_keywords",
+      "keyword_scores": {
+        "policy": 2,
+        "employment": 1
+      },
+      "categorization_date": "2025-09-21T21:08:41.927738",
+      "source_document": "20250921_210841_Policy_A_Basic_Health.pdf",
+      "content_hash": "dfcc767c2040086e9df94f1dc0f1cf08",
+      "category_name": "Policy Document"
+    }
+  },
+  "stats": {
+    "total_categorizations": 1,
+    "cache_hits": 3,
+    "llm_categorizations": 0,
+    "fallback_categorizations": 3,
+    "failed_categorizations": 0
+  }
+}
