@@ -61,7 +61,7 @@ def setup_cors():
     cors_methods = [method.strip() for method in cors_methods.split(',')]
     cors_headers = [header.strip() for header in cors_headers.split(',')]
     
-    CORS(app, resources={r"/*": {"origins": "*"}})
+    CORS(app, resources={r"/*": {"origins": ["*", "https://legalai-7737e.web.app"]}}, supports_credentials=True)
     
     logger.info(f"CORS configured - Origins: {cors_origins}, Methods: {cors_methods}")
 
