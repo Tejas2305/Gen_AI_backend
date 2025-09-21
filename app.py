@@ -47,27 +47,20 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100MB max file size
 
-# Setup CORS from environment variables
+# --- FIXED CORS SETUP BELOW ---
 def setup_cors():
-    """Setup CORS based on environment variables"""
-    cors_origins = os.environ.get('CORS_ORIGINS', '*')
-    cors_methods = os.environ.get('CORS_METHODS', 'GET,POST,PUT,DELETE,OPTIONS')
-    cors_headers = os.environ.get('CORS_HEADERS', 'Content-Type,Authorization')
-    
-    # Convert comma-separated strings to lists
-    if cors_origins != '*':
-        cors_origins = [origin.strip() for origin in cors_origins.split(',')]
-    
-    cors_methods = [method.strip() for method in cors_methods.split(',')]
-    cors_headers = [header.strip() for header in cors_headers.split(',')]
-    
-    CORS(app, 
-         origins=cors_origins,
-         methods=cors_methods,
-         allow_headers=cors_headers,
-         supports_credentials=os.environ.get('CORS_CREDENTIALS', 'false').lower() == 'true')
-    
-    logger.info(f"CORS configured - Origins: {cors_origins}, Methods: {cors_methods}")
+    """
+    Setup CORS to allow localhost:5173 (dev) and production frontend.
+    You can add more origins as needed.
+    """
+    allowed_origins = [
+        "http://localhost:5173",
+        "https://legalai-7737e.web.app",
+        # Add your production frontend URL here if different
+    ]
+    # For quick development, you may use '*' (not for production!)
+    CORS(app, resources={r"/*": {"origins": allowed_origins}}, supports_credentials=True)
+    logger.info(f"CORS configured - Origins: {allowed_origins}")
 
 setup_cors()
 
@@ -1012,3 +1005,19 @@ if __name__ == '__main__':
 
 # Make the app available for WSGI servers (like gunicorn)
 application = app
+
+@app.route('/log', methods=['GET'])
+def show_logs():
+    """Endpoint to display the contents of the log file."""
+    try:
+        log_file_path = 'logs/flask_api.log'
+        if not os.path.exists(log_file_path):
+            return jsonify({"success": False, "error": "Log file not found."}), 404
+
+        with open(log_file_path, 'r') as log_file:
+            logs = log_file.read()
+
+        return jsonify({"success": True, "logs": logs.splitlines()}), 200
+    except Exception as e:
+        logger.error(f"Error reading log file: {e}")
+        return jsonify({"success": False, "error": "Failed to read log file."}), 500
