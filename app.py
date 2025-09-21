@@ -61,11 +61,7 @@ def setup_cors():
     cors_methods = [method.strip() for method in cors_methods.split(',')]
     cors_headers = [header.strip() for header in cors_headers.split(',')]
     
-    CORS(app, 
-         origins=cors_origins,
-         methods=cors_methods,
-         allow_headers=cors_headers,
-         supports_credentials=os.environ.get('CORS_CREDENTIALS', 'false').lower() == 'true')
+    CORS(app, resources={r"/*": {"origins": "*"}})
     
     logger.info(f"CORS configured - Origins: {cors_origins}, Methods: {cors_methods}")
 
@@ -101,6 +97,7 @@ def init_pipeline():
         return True
     except Exception as e:
         logger.error(f"Failed to initialize pipeline: {e}")
+        temp_upload_dir = None  # Ensure it's explicitly set to None
         return False
 
 def cleanup_temp_files():
@@ -177,45 +174,48 @@ def get_status():
 def upload_files():
     """Upload files for processing with validation"""
     try:
+        if not temp_upload_dir or not os.path.exists(temp_upload_dir):
+            return handle_error("Temporary upload directory is not initialized.", 500)
+
         if 'files' not in request.files:
             return handle_error("No files provided", 400)
-        
+
         files = request.files.getlist('files')
         if not files or all(file.filename == '' for file in files):
             return handle_error("No files selected", 400)
-        
+
         # Validate and save uploaded files
         uploaded_files = []
         errors = []
-        
+
         for file in files:
             if file and file.filename:
                 # Check file extension
                 if not allowed_file(file.filename):
                     errors.append(f"File type not allowed: {file.filename}")
                     continue
-                
+
                 # Check file size
                 if not validate_file_size(file):
                     errors.append(f"File too large: {file.filename} (max 50MB)")
                     continue
-                
+
                 # Save file
                 filename = secure_filename(file.filename)
                 # Add timestamp to avoid conflicts
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                filename = f"{timestamp}_{filename}"
                 file_path = os.path.join(temp_upload_dir, filename)
-                
+
                 try:
+                    logger.info(f"Saving file to: {file_path}")
                     file.save(file_path)
                     uploaded_files.append(file_path)
                 except Exception as e:
                     errors.append(f"Failed to save {file.filename}: {str(e)}")
-        
+
         if not uploaded_files and errors:
             return handle_error(f"Upload failed: {'; '.join(errors)}", 400)
-        
+
         result = {
             "success": True,
             "files_uploaded": len(uploaded_files),
@@ -223,15 +223,16 @@ def upload_files():
             "message": "Files uploaded successfully. Use /process endpoint to process them.",
             "timestamp": datetime.now().isoformat()
         }
-        
+
         if errors:
             result["warnings"] = errors
-        
+
         return jsonify(result)
-        
+
     except RequestEntityTooLarge:
         return handle_error("File too large (max 100MB total)", 413)
     except Exception as e:
+        logger.error(f"Unexpected error during upload: {str(e)}")
         return handle_error(f"Upload error: {str(e)}")
 
 @app.route('/process', methods=['POST'])
