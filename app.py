@@ -1,4 +1,4 @@
-# app.py - Flask API wrapper for Legal RAG Pipeline (Corrected Version)
+# app.py - Flask API wrapper for Legal RAG Pipeline (Production Version)
 
 import os
 import logging
@@ -10,25 +10,66 @@ from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
 import tempfile
 import shutil
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Import your main pipeline
 from main_pipeline import LegalRAGPipeline
 
-# Setup logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler('logs/flask_api.log'),
-        logging.StreamHandler()
-    ]
-)
+# Setup logging for production
+def setup_logging():
+    """Setup logging based on environment"""
+    log_level = logging.INFO
+    
+    # In production, only log to console (Render captures this)
+    if os.environ.get('RENDER') or os.environ.get('FLASK_ENV') == 'production':
+        handlers = [logging.StreamHandler()]
+    else:
+        # In development, log to both file and console
+        os.makedirs('logs', exist_ok=True)
+        handlers = [
+            logging.FileHandler('logs/flask_api.log'),
+            logging.StreamHandler()
+        ]
+    
+    logging.basicConfig(
+        level=log_level,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=handlers
+    )
+
+setup_logging()
 logger = logging.getLogger(__name__)
 
 # Initialize Flask app
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100MB max file size
-CORS(app)  # Enable CORS for frontend communication
+
+# Setup CORS from environment variables
+def setup_cors():
+    """Setup CORS based on environment variables"""
+    cors_origins = os.environ.get('CORS_ORIGINS', '*')
+    cors_methods = os.environ.get('CORS_METHODS', 'GET,POST,PUT,DELETE,OPTIONS')
+    cors_headers = os.environ.get('CORS_HEADERS', 'Content-Type,Authorization')
+    
+    # Convert comma-separated strings to lists
+    if cors_origins != '*':
+        cors_origins = [origin.strip() for origin in cors_origins.split(',')]
+    
+    cors_methods = [method.strip() for method in cors_methods.split(',')]
+    cors_headers = [header.strip() for header in cors_headers.split(',')]
+    
+    CORS(app, 
+         origins=cors_origins,
+         methods=cors_methods,
+         allow_headers=cors_headers,
+         supports_credentials=os.environ.get('CORS_CREDENTIALS', 'false').lower() == 'true')
+    
+    logger.info(f"CORS configured - Origins: {cors_origins}, Methods: {cors_methods}")
+
+setup_cors()
 
 # Global pipeline instance
 pipeline = None
@@ -108,7 +149,8 @@ def health_check():
         "status": "healthy",
         "service": "Legal RAG Pipeline API",
         "timestamp": datetime.now().isoformat(),
-        "pipeline_ready": pipeline is not None and pipeline.pipeline_ready
+        "pipeline_ready": pipeline is not None and pipeline.pipeline_ready,
+        "environment": os.environ.get('FLASK_ENV', 'development')
     })
 
 @app.route('/status', methods=['GET'])
@@ -737,7 +779,7 @@ def clear_conversation():
         if not pipeline:
             return handle_error("Pipeline not initialized", 503)
         
-        pipeline.clear_conversation()  # Fixed method name
+        pipeline.clear_conversation()
         
         return jsonify({
             "success": True,
@@ -842,60 +884,71 @@ import atexit
 atexit.register(shutdown_handler)
 
 # ============================================================================
-# MAIN APPLICATION ENTRY POINT
+# MAIN APPLICATION ENTRY POINT (Production Ready)
 # ============================================================================
+
+# Initialize pipeline at module level for production
+if not init_pipeline():
+    logger.error("Failed to initialize pipeline on startup!")
 
 if __name__ == '__main__':
     print("Legal Document AI Analyzer - Flask API Server")
     print("=" * 60)
     
-    # Ensure logs directory exists
-    os.makedirs('logs', exist_ok=True)
+    # Check if running in production
+    is_production = os.environ.get('RENDER') or os.environ.get('FLASK_ENV') == 'production'
     
-    # Initialize pipeline
-    if init_pipeline():
+    if pipeline:
         print("Pipeline initialized successfully!")
         print(f"Temporary upload directory: {temp_upload_dir}")
         
-        print("\nAPI Endpoints:")
-        print("   GET  /health              - Health check")
-        print("   GET  /status              - Pipeline status")
-        print("   POST /upload              - Upload files")
-        print("   POST /process             - Process documents")
-        print("   POST /load_stores         - Load existing stores")
-        print("   POST /query               - Query documents")
-        print("   POST /query_file          - Query specific file")
-        print("   POST /compare             - Compare categories")
-        print("   POST /compare_files       - Compare specific files")
-        print("   POST /compare_obligations - Compare obligations")
-        print("   POST /compare_termination - Compare termination clauses")
-        print("   POST /compare_clauses     - Compare specific clauses")
-        print("   POST /summary             - Get document summary")
-        print("   POST /summary_file        - Get file summary")
-        print("   POST /obligations         - Find key obligations")
-        print("   POST /obligations_file    - Find obligations in file")
-        print("   POST /termination         - Find termination clauses")
-        print("   POST /termination_file    - Find termination in file")
-        print("   POST /explain_clause      - Explain specific clause")
-        print("   POST /explain_clause_file - Explain clause in file")
-        print("   GET  /categories          - Get available categories")
-        print("   GET  /categorizations     - Get categorization results")
-        print("   POST /export_report       - Export categorization report")
-        print("   POST /conversation/clear  - Clear conversation history")
-        print("   GET  /conversation/history - Get conversation history")
-        print("   DELETE /stores/delete     - Delete category stores")
+        if not is_production:
+            print("\nAPI Endpoints:")
+            print("   GET  /health              - Health check")
+            print("   GET  /status              - Pipeline status")
+            print("   POST /upload              - Upload files")
+            print("   POST /process             - Process documents")
+            print("   POST /load_stores         - Load existing stores")
+            print("   POST /query               - Query documents")
+            print("   POST /query_file          - Query specific file")
+            print("   POST /compare             - Compare categories")
+            print("   POST /compare_files       - Compare specific files")
+            print("   POST /compare_obligations - Compare obligations")
+            print("   POST /compare_termination - Compare termination clauses")
+            print("   POST /compare_clauses     - Compare specific clauses")
+            print("   POST /summary             - Get document summary")
+            print("   POST /summary_file        - Get file summary")
+            print("   POST /obligations         - Find key obligations")
+            print("   POST /obligations_file    - Find obligations in file")
+            print("   POST /termination         - Find termination clauses")
+            print("   POST /termination_file    - Find termination in file")
+            print("   POST /explain_clause      - Explain specific clause")
+            print("   POST /explain_clause_file - Explain clause in file")
+            print("   GET  /categories          - Get available categories")
+            print("   GET  /categorizations     - Get categorization results")
+            print("   POST /export_report       - Export categorization report")
+            print("   POST /conversation/clear  - Clear conversation history")
+            print("   GET  /conversation/history - Get conversation history")
+            print("   DELETE /stores/delete     - Delete category stores")
+            
+            print(f"\nStarting Flask development server...")
+            print(f"API will be available at: http://localhost:5000")
         
-        print(f"\nStarting Flask server...")
-        print(f"API will be available at: http://localhost:5000")
-        
-        # Run the Flask app
-        app.run(
-            host='0.0.0.0',  # Allow external connections
-            port=5000,
-            debug=True,      # Enable debug mode for development
-            threaded=True    # Enable threading
-        )
+        # Only run Flask dev server in development mode
+        if not is_production:
+            app.run(
+                host='0.0.0.0',
+                port=int(os.environ.get('PORT', 5000)),
+                debug=False,  # Disable debug in production-like setup
+                threaded=True
+            )
+        else:
+            logger.info("Running in production mode - WSGI server will handle the app")
     else:
         print("Failed to initialize pipeline!")
-        print("Check your configuration and try again.")
+        if not is_production:
+            print("Check your configuration and try again.")
         exit(1)
+
+# Make the app available for WSGI servers (like gunicorn)
+application = app
